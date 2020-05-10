@@ -1,0 +1,34 @@
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.app-wrapper {
+  display: grid;
+  width: 965px;
+  margin: 0 auto;
+
+  grid-template-areas: 
+  'h h'
+  'n c';
+
+  grid-template-rows: 100px 1fr;
+  grid-template-columns: 2fr 10fr;
+  grid-gap: 10px;
+}
+.app-wrapper-content {
+  grid-area: c;
+  background: darkcyan;
+}
+
+
+
+
+
+

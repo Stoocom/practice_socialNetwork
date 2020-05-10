@@ -1,0 +1,52 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 3fr 10fr;
+    grid-template-rows: 1fr 1fr;
+    padding: 10px;
+
+    grid-template-areas: 
+    'a b'
+    'c c';
+}
+
+.dialogsItems .dialog {
+    text-decoration: none;
+}
+.dialogsItems .active {
+    color: gold;
+}
+
+.dialog a {
+    color: #ffffff;
+    text-decoration: none;
+}
+.messages {
+    padding: 10px;
+    color: #ffffff;
+}
+.messagesNew {
+    padding: 10px;
+    color: #ffffff;
+}
+.messages_block_c {
+    color: #ffffff;
+    grid-area: c;
+}
+.messagesNew textarea {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    height: 50px;
+    width: 150px;
+    font-size: 14px;
+    padding: 5px 5px;
+}
+.newMessage__button button {
+    border-radius: 6px;
+    padding: 5px 10px;
+    background-color: coral;
+    color: #fff;
+    text-align: center;
+}
+
+

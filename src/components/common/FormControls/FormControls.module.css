@@ -1,0 +1,15 @@
+
+.form_control.error textarea,
+.form_control.error input 
+{
+    border: 2px solid coral;
+}
+.form_control.error span 
+{
+    color: coral;
+    font-weight: bold;
+}
+.formCommonError {
+    border: 2px solid coral;
+    color: coral;
+}

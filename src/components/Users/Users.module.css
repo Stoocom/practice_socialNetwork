@@ -1,0 +1,13 @@
+.user {
+    padding: 10px;
+    color:#ffffff;
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 100px;
+}
+
+.selectedPage {
+    font-weight: bold; 
+}

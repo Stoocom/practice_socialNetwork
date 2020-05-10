@@ -1,0 +1,15 @@
+.postsBlock {
+    padding: 10px;
+}
+.posts {
+    margin-top: 10px;
+}
+.myPost__button button {
+    margin-right: 10px;
+    border-radius: 6px;
+    padding: 5px 10px;
+    background-color: coral;
+    margin-top: 10px;
+    color: #fff;
+
+}
