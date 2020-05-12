@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-// import s from './ProfileInfo.module.css';
-// import Loader from '../../common/Preloader/Loader';
+
 
 const ProfileStatusHooks = (props) => {
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Profile from './Profile';
-import { getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator } from '../../redux/profileReducer';
+import { getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, savePhoto, saveProfile } from '../../redux/profileReducer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -18,21 +18,15 @@ class ProfileContainer extends React.Component {
         }
         this.props.getProfileThunkCreator(userId)
         this.props.getStatusThunkCreator(userId)
-        //this.props.updateStatusThunkCreator('Статус')
-        // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
-        //     .then(response => {
-        //         //this.props.setLoading(false)
-        //         this.props.setUserProfile(response.data)
-        //     })
 
     }
 
         render() {
             return (
                 <Profile {...this.props}
-                // profile = { this.props.profile }
-                // status = { this.props.status }
-                // updateStatus = { this.props.updateStatusThunkCreator}
+                isOwner={!this.props.match.params.userId}
+                savePhoto={this.props.savePhoto}
+                saveProfile={this.props.saveProfile}
                 />
             )
         }
@@ -48,7 +42,7 @@ let mapStateToProps = (state) => {
 }
 
 export default compose(
-    connect(mapStateToProps, { getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator }),
+    connect(mapStateToProps, { getProfileThunkCreator, getStatusThunkCreator, updateStatusThunkCreator, savePhoto, saveProfile }),
     withRouter,
     //withAuthRedirect,
 )(ProfileContainer)

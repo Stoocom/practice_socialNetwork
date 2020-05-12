@@ -1,10 +1,12 @@
 import { profileAPI } from "../api/profileApi"
+import { stopSubmit } from "redux-form"
 
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_USER_STATUS = 'SET_USER_STATUS'
 const UPDATE_USER_STATUS = 'UPDATE_USER_STATUS'
 const DELETE_POST = 'DELETE_POST'
+const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS'
 
 
 let initialState = {
@@ -50,7 +52,13 @@ const profileReducer = (state = initialState, action) => {
         case DELETE_POST:
             return {
                 ...state,
-                posts: state.posts.filter(p => p.id != action.postId ),
+                posts: state.posts.filter(p => p.id !== action.postId),
+            }
+        case SAVE_PHOTO_SUCCESS:
+            console.log(state)
+            return {
+                ...state,
+                profile: { ...state.profile, photos: action.photos },
             }
         default:
             return state
@@ -72,6 +80,10 @@ export const setUserStatus = (status) => {
 export const updateUserStatus = (status) => {
     return { type: UPDATE_USER_STATUS, status }
 }
+export const savePhotoSuccess = (photos) => {
+    return { type: SAVE_PHOTO_SUCCESS, photos }
+}
+
 export const getProfileThunkCreator = (userId) => {
     return dispatch => {
         profileAPI.getProfile(userId)
@@ -89,12 +101,38 @@ export const getStatusThunkCreator = (userId) => {
             })
     }
 }
-export const updateStatusThunkCreator = (status) => {
+export const updateStatusThunkCreator = (status) => async dispatch => {
+    try {
+        let response = await profileAPI.updateStatus(status)
+        if (response.data.resultCode === 0) {
+            dispatch(updateUserStatus(status))
+        }
+    } catch (error) {
+        //dispatch()
+    }
+}
+export const savePhoto = (file) => {
     return dispatch => {
-        profileAPI.updateStatus(status)
+        profileAPI.savePhoto(file)
             .then(response => {
                 if (response.data.resultCode === 0) {
-                    dispatch(updateUserStatus(status))
+                    dispatch(savePhotoSuccess(response.data.data.photos))
+                }
+            })
+    }
+}
+
+export const saveProfile = (profile) => {
+    return (dispatch, getState) => {
+        const userId = getState().auth.id
+        profileAPI.saveProfile(profile)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(getProfileThunkCreator(userId))
+                } else {
+                    //dispatch(stopSubmit("profileData", { _error: response.data.messages[0] })) //тут ошибка выводится общая
+                    dispatch(stopSubmit("profileData", { "contacts": { "facebook": response.data.messages[0] } })) // для конкретного случая
+                    return Promise.reject(response.data.messages[0])
                 }
             })
     }

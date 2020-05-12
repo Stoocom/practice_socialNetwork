@@ -1,4 +1,10 @@
 .descriptionBlock{
     padding: 10px;
 }
-
+.contact {
+    margin-left: 10px;
+}
+.formCommonError {
+    border: 2px solid coral;
+    color: coral;
+}

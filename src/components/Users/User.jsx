@@ -2,8 +2,6 @@ import React from 'react'
 import s from './Users.module.css'
 import userPhoto from '../../assets/images/default_icon.jpg'
 import { NavLink } from 'react-router-dom'
-import * as axios from 'axios'
-import Paginator from '../common/Paginator/Paginator'
 
 let User = (props) => {
     let u = props.user

@@ -1,29 +1,33 @@
 import React from 'react';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import { Input, createField } from '../common/FormControls/FormControls';
 import { required } from '../../utils/validators/validators';
 import { loginThunkCreator } from '../../redux/authReducer';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import style from '../../components/common/FormControls/FormControls.module.css'
-//import s from './Header.module.css';
-//import { NavLink } from 'react-router-dom';
+
 
 
 //const maxLength = maxLengthCreator(3);
 
-const LoginForm = ({ handleSubmit, error }) => {
+const LoginForm = ({ handleSubmit, error, captchaUrl }) => {
     return (
         <form onSubmit={handleSubmit}>
 
-                {createField("Email", "email", [required], Input)}
-                {createField("Password", "password", [required], Input, {type: "password"})}    
-                {createField(null, "rememberMe", [], Input, {type: "checkbox"}, "remember me")}    
+            {createField("Email", "email", [required], Input)}
+            {createField("Password", "password", [required], Input, { type: "password" })}
+            {createField(null, "rememberMe", [], Input, { type: "checkbox" }, "remember me")}
 
-            {error &&
+            { captchaUrl && <img alt="somePic" src={captchaUrl} /> }
+            { captchaUrl && createField("Symbols from image", "captcha", [required], Input)}
+
+            {
+            error &&
                 <div className={style.formCommonError}>
                     {error}
-                </div>}
+                </div>
+            }
             <div>
                 <button>Login</button>
             </div>
@@ -38,8 +42,7 @@ const ReduxLoginForm = reduxForm({
 const LoginPage = (props) => {
 
     const onSubmitted = (formData) => {
-        console.log(formData)
-        props.loginThunkCreator(formData.email, formData.password, formData.rememberMe)
+        props.loginThunkCreator(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
 
     if (props.isAuth) {
@@ -49,13 +52,16 @@ const LoginPage = (props) => {
     return (
         <div>
             <h1>Login</h1>
-            <ReduxLoginForm onSubmit={onSubmitted} />
+            <ReduxLoginForm onSubmit={onSubmitted} captchaUrl={props.captchaUrl} />
         </div>
     )
 }
 
 const mapStateToProps = (state) => {
-    return { isAuth: state.auth.isAuth }
+    return {
+        isAuth: state.auth.isAuth,
+        captchaUrl: state.auth.captchaUrl,
+    }
 }
 
 export default connect(mapStateToProps, {

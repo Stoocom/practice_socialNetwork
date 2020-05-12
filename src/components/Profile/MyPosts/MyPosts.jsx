@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 import { reduxForm, Field } from 'redux-form';
 import { required, maxLengthCreator } from '../../../utils/validators/validators';
 import { Textarea } from '../../common/FormControls/FormControls';
-//import { addPostActionCreator, updateNewPostTextActionCreator } from '../../../redux/profileReducer';
 
 
 const MyPosts = React.memo(props => {
